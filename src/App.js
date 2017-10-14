@@ -25,12 +25,13 @@ class App extends Component {
       guests: this.state.guests.map((guest, index) => {
         if (index === indexToChange) {
           return {
-            ...guest, // name: guest.name
+            ...guest,
             isConfirmed: !guest.isConfirmed
-          }
+          };
         }
+        return guest
       })
-    })
+    });
 
   getTotalInvited = () => this.state.guests.length
   // getAttendingGuests = () =>
@@ -71,7 +72,9 @@ class App extends Component {
               </tr>
             </tbody>
           </table>
-          <GuestList guests={this.state.guests}/>
+          <GuestList
+            guests={this.state.guests}
+            toggleConfirmationAt= {this.toggleConfirmationAt} />
         </div>
       </div>
     );
