@@ -141,6 +141,7 @@ newGuestSubmitHandler = e => {
             setNameAt={this.setNameAt}
             isFiltered={this.state.isFiltered}
             removeGuestAt={this.removeGuestAt}
+            pendingGuest={this.state.pendingGuest}
           />
         </div>
       </div>

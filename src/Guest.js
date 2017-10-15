@@ -20,7 +20,7 @@ const Guest = props =>
       {props.isEditing ? "save" : "edit"}
     </button>
     <button onClick={props.handleRemove}>remove</button>
-  </li>;
+  </li>
 
 Guest.propTypes = {
   name: PropTypes.string.isRequired,
