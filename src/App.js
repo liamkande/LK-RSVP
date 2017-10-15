@@ -1,64 +1,67 @@
 import React, { Component } from 'react'
-import GuestList from './GuestList'
+
 import logo from './LKweblogo.svg'
+import GuestList from './GuestList'
 
 class App extends Component {
 
   state = {
+    isFiltered: false,
     guests: [
       {
-        name: 'Apple',
+        name: 'Liam',
         isConfirmed: false,
-        isEditing: true,
+        isEditing: false
       },
       {
-        name: 'Liam',
+        name: 'Apple',
         isConfirmed: true,
         isEditing: false
       },
       {
         name: 'Juliana',
-        isConfirmed: true,
+        isConfirmed: false,
         isEditing: true
       }
     ]
-  }
+  };
 
-// *** For  indiviiduas Confirmed ***
+  toggleGuestPropertyAt = (property, indexToChange) =>
+    this.setState({
+      guests: this.state.guests.map((guest, index) => {
+        if (index === indexToChange) {
+          return {
+            ...guest,
+            [property]: !guest[property]
+          };
+        }
+        return guest;
+      })
+    });
 
-//  toggleConfirmationAt = indexToChange =>
-//    this.setState({
-//      guests: this.state.guests.map((guest, index) => {
-//        if (index === indexToChange) {
-//          return {
-//            ...guest,
-//            isConfirmed: !guest.isConfirmed
-//          };
-//        }
-//        return guest
-//      })
-//    })
-
-toggleGuestPropertyAt = (property, indexToChange) =>
-  this.setState({
-    guests: this.state.guests.map((guest, index) => {
-      if (index === indexToChange) {
-        return {
-          ...guest,
-          [property]: !guest[property]
-        };
-      }
-      return guest
-    })
-  })
-
-toggleConfirmationAt = index =>
-  this.toggleGuestPropertyAt("isConfirmed", index)
+  toggleConfirmationAt = index =>
+    this.toggleGuestPropertyAt("isConfirmed", index);
 
   toggleEditingAt = index =>
-    this.toggleGuestPropertyAt("isEditing", index)
+    this.toggleGuestPropertyAt("isEditing", index);
 
-  getTotalInvited = () => this.state.guests.length
+  setNameAt = (name, indexToChange) =>
+    this.setState({
+      guests: this.state.guests.map((guest, index) => {
+        if (index === indexToChange) {
+          return {
+            ...guest,
+            name
+          };
+        }
+        return guest;
+      })
+    });
+
+  toggleFilter = () =>
+    this.setState({ isFiltered: !this.state.isFiltered });
+
+  getTotalInvited = () => this.state.guests.length;
   // getAttendingGuests = () =>
   // getUnconfirmedGuests = () =>
 
@@ -67,18 +70,20 @@ toggleConfirmationAt = index =>
       <div className="App">
         <header>
           <h1>RSVP</h1>
-          <a href="http://liamkande.com/"><img src={logo} width={70} alt="LKPLAYS Logo" />
-          </a>
+          <a href="http://liamkande.com"><img src={logo} width={70} alt="LK-Logo"/></a>
           <form>
-              <input type="text" value="Safia" placeholder="Invite Someone" />
-              <button type="submit" name="submit" value="submit">Submit</button>
+            <input type="text" value="Safia" placeholder="Invite Someone" />
+            <button type="submit" name="submit" value="submit">Submit</button>
           </form>
         </header>
         <div className="main">
           <div>
             <h2>Invitees</h2>
             <label>
-              <input type="checkbox" /> Hide those who haven't responded
+              <input
+                type="checkbox"
+                onChange={this.toggleFilter}
+                checked={this.state.isFiltered} /> Hide those who haven't responded
             </label>
           </div>
           <table className="counter">
@@ -97,14 +102,19 @@ toggleConfirmationAt = index =>
               </tr>
             </tbody>
           </table>
+
           <GuestList
             guests={this.state.guests}
-            toggleConfirmationAt= {this.toggleConfirmationAt}
-            toggleEditingAt = {this.toggleEditingAt} />
+            toggleConfirmationAt={this.toggleConfirmationAt}
+            toggleEditingAt={this.toggleEditingAt}
+            setNameAt={this.setNameAt}
+            isFiltered={this.state.isFiltered}
+          />
+
         </div>
       </div>
     );
   }
 }
 
-export default App
+export default App;
