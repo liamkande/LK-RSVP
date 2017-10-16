@@ -30,6 +30,6 @@ GuestList.propTypes = {
   isFiltered: PropTypes.bool.isRequired,
   removeGuestAt: PropTypes.func.isRequired,
   pendingGuest: PropTypes.string.isRequired
-};
+}
 
 export default GuestList

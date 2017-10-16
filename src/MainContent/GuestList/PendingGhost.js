@@ -15,7 +15,7 @@ const PendingGhost = props => {
 }
 
 PendingGhost.propTypes = {
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired
 }
 
 export default PendingGhost
